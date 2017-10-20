@@ -1,6 +1,6 @@
 .metadata/*
 *.class
 
-Animorphs/bin/*
-Animorphs/.settings/*
+PS_2Much/bin/*
+PS_2Much/.settings/*
 .recommenders/*
