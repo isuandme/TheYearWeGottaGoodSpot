@@ -1,0 +1,6 @@
+.metadata/*
+*.class
+
+Animorphs/bin/*
+Animorphs/.settings/*
+.recommenders/*
