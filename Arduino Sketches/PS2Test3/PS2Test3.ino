@@ -88,6 +88,9 @@ void setup(){
       Serial.print("Wireless Sony DualShock Controller found ");
       break;
    }
+
+   //We'll set type to 0.
+   type = 0;
 }
 
 void loop() {
