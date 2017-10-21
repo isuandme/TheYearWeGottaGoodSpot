@@ -7,8 +7,8 @@
 #define PS2_SEL        11
 #define PS2_CLK        10
 #define LEDPin         13
-#define rumble      false
-#define pressures   false
+#define rumble      true
+#define pressures   true
 #define INFOSIZE    20
 
 PS2X ps2x;
@@ -17,27 +17,29 @@ int error = 0;
 byte info[INFOSIZE];
 
 void setup() {
+  pinMode(LEDPin,OUTPUT);
   Serial.begin(9600);
   delay(300);
   error = ps2x.config_gamepad(PS2_CLK, PS2_CMD, PS2_SEL, PS2_DAT, pressures, rumble);
-
+  
   //Handle errors
-  if(error != 0 && error != 3){
+  if(error == 1 || error == 2){
     boolean on = false;
     while(true){
       digitalWrite(LEDPin, on?LOW:HIGH);
+      on = !on;
       delay(200);
     }
   }
 
   //Good to go. Initialize info[].
-  for(int i = 0; i < INFOSIZE;i++){
-    info[i]=0;
-  }
+//  for(int i = 0; i < INFOSIZE;i++){
+//    info[i]=0;
+//  }
 }
 
 void loop() {
-
+  
   info[0] = ps2x.Button(PSB_START)?1:0;
   info[1] = ps2x.Button(PSB_SELECT)?1:0;
   info[2] = ps2x.Button(PSB_TRIANGLE)?1:0;
@@ -60,9 +62,8 @@ void loop() {
   info[19] = ps2x.Button(PSB_R3);
   
 
-  if(Serial){
-    Serial.write(info,INFOSIZE);
-  }
+  //if(Serial)
+  Serial.write(info[0]);
   delay(50);
   
 }
