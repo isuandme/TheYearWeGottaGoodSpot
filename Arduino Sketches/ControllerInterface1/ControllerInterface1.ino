@@ -19,11 +19,19 @@ byte info[INFOSIZE];
 void setup() {
   pinMode(LEDPin,OUTPUT);
   Serial.begin(9600);
-  delay(300);
+  delay(500);
   error = ps2x.config_gamepad(PS2_CLK, PS2_CMD, PS2_SEL, PS2_DAT, pressures, rumble);
   
   //Handle errors
-  if(error == 1 || error == 2){
+  if(error == 1){
+    boolean on = false;
+    while(true){
+      digitalWrite(LEDPin, on?LOW:HIGH);
+      on = !on;
+      delay(100);
+    }
+  }
+  if(error == 2){
     boolean on = false;
     while(true){
       digitalWrite(LEDPin, on?LOW:HIGH);
@@ -39,7 +47,7 @@ void setup() {
 }
 
 void loop() {
-  
+  ps2x.read_gamepad();
   info[0] = ps2x.Button(PSB_START)?1:0;
   info[1] = ps2x.Button(PSB_SELECT)?1:0;
   info[2] = ps2x.Button(PSB_TRIANGLE)?1:0;
@@ -63,7 +71,9 @@ void loop() {
   
 
   //if(Serial)
-  Serial.write(info[0]);
+  for(int i = 0; i < INFOSIZE; i++){
+    Serial.write(info[i]);
+  }
   delay(50);
   
 }
