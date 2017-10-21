@@ -19,5 +19,5 @@ int data = 0;
 void loop() {
   data = controller.read();
   digitalWrite(LEDPin, (data&psxO)? HIGH:LOW);
-  delay(1);
+  delay(50);
 }
