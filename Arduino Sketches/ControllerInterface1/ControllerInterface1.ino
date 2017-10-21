@@ -9,7 +9,7 @@
 #define LEDPin         13
 #define rumble      false
 #define pressures   false
-#define INFOSIZE    18
+#define INFOSIZE    20
 
 PS2X ps2x;
 
@@ -37,6 +37,7 @@ void setup() {
 }
 
 void loop() {
+
   info[0] = ps2x.Button(PSB_START)?1:0;
   info[1] = ps2x.Button(PSB_SELECT)?1:0;
   info[2] = ps2x.Button(PSB_TRIANGLE)?1:0;
@@ -51,6 +52,17 @@ void loop() {
   info[11] = ps2x.Button(PSB_R1)?1:0;
   info[12] = ps2x.Button(PSB_L2)?1:0;
   info[13] = ps2x.Button(PSB_R2)?1:0;
+  info[14] = ps2x.Analog(PSS_LX);
+  info[15] = ps2x.Analog(PSS_LY);
+  info[16] = ps2x.Analog(PSS_RX);
+  info[17] = ps2x.Analog(PSS_RY);
+  info[18] = ps2x.Button(PSB_L3);
+  info[19] = ps2x.Button(PSB_R3);
+  
+
+  if(Serial){
+    Serial.write(info,INFOSIZE);
+  }
   delay(50);
   
 }
