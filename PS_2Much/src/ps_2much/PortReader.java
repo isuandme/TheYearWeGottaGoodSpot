@@ -1,9 +1,11 @@
 package ps_2much;
 
+import java.util.Scanner;
+
 import com.fazecast.jSerialComm.*;
 
 public class PortReader {
-
+	
 	public static void main(String[] arg) throws InterruptedException{
 		
 		SerialPort ports[] = SerialPort.getCommPorts();
@@ -16,30 +18,31 @@ public class PortReader {
 				System.out.println(i++ + ". " + port.getSystemPortName());
 			}
 			
-			SerialPort port = ports[ports.length -1];
+			SerialPort port = ports[2];
 			
 			if(!port.openPort())
 				System.out.println("Open Port Failed");
 			
-			port.setBaudRate(9600);
-			port.setComPortTimeouts(SerialPort.TIMEOUT_READ_SEMI_BLOCKING, 1000, 0);
+			//port.setComPortParameters(9600, newDataBits, newStopBits, newParity);
+			port.setComPortTimeouts(SerialPort.TIMEOUT_WRITE_SEMI_BLOCKING, 0, 0);
 			
-			SerialPortEvent portEvent = new SerialPortEvent(port, SerialPort.LISTENING_EVENT_DATA_RECEIVED); 
+			Scanner data = new Scanner(port.getInputStream());
 			
-			try {
-				   while (true)
-				   {
-				      byte[] readBuffer = new byte[1024];
-				      int numRead = port.readBytes(readBuffer, readBuffer.length);
-				      System.out.println("Read " + numRead + " bytes.");
-				   }
-				} catch (Exception e) { 
-					e.printStackTrace(); 
-				}
-				
+			while(true){
+			
+				byte[] selection = new byte[2];
+				SerialPortEvent portEvent = new SerialPortEvent(port, SerialPort.LISTENING_EVENT_DATA_AVAILABLE);
+				selection[0] = portEvent.getReceivedData()[0];
+				selection[0] = portEvent.getReceivedData()[1];
+			}
+			
+			
+			
+			data.close();
 			port.closePort();
-			
-		}
-
 	
+	}
+			
 }
+	
+
