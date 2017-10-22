@@ -6,18 +6,24 @@
   #define PS2_CMD        12
   #define PS2_SEL        11
   #define PS2_CLK        10
+  #define PS2j_DAT        4   
+  #define PS2j_CMD        7
+  #define PS2j_SEL        6
+  #define PS2j_CLK        5
   #define LEDPin         13
   #define rumble      true
   #define pressures   true
-  #define INFOSIZE    20
-  #define BUTTONS     14
+  #define INFOSIZE    40
+  #define BUTTONS     32
   #define CONTROLLERCHECKDELAY 35
   #define RESETDELAY 1000
-  #define MESSAGEDELAY 10
+  #define MESSAGEDELAY 15
   
   PS2X ps2x;
+  PS2X ps2jx;
   
   int error = 0;
+  int errorj = 0;
   byte info[INFOSIZE];
   
   void setup() {
@@ -25,9 +31,9 @@
     Serial.begin(9600);
     delay(500);
     error = ps2x.config_gamepad(PS2_CLK, PS2_CMD, PS2_SEL, PS2_DAT, pressures, rumble);
-    
+    errorj = ps2jx.config_gamepad(PS2j_CLK, PS2j_CMD, PS2j_SEL, PS2j_DAT, pressures, rumble);
     //Handle errors
-    if(error == 1){
+    if(error == 1 || errorj == 1){
       boolean on = false;
       while(true){
         digitalWrite(LEDPin, on?LOW:HIGH);
@@ -35,7 +41,7 @@
         delay(100);
       }
     }
-    if(error == 2){
+    if(error == 2 || errorj == 2){
       boolean on = false;
       while(true){
         digitalWrite(LEDPin, on?LOW:HIGH);
@@ -76,20 +82,30 @@
       if (millis() - lastCheck > CONTROLLERCHECKDELAY){
         lastCheck = millis();
         ps2x.read_gamepad();
+        ps2jx.read_gamepad();
       }
       
-      byte stickVal = ps2x.Analog(indexToControl(j+16));
-      if(info[j+16]!=stickVal){
-        info[j+16] = stickVal;
-        Serial.write(j+16);
+      byte stickVal;
+      if(j<4){
+        stickVal = ps2x.Analog(indexToControl(j+BUTTONS));
+      }else{
+          stickVal = ps2jx.Analog(indexToControl(j+BUTTONS));
+      }
+      if(info[j+BUTTONS]!=stickVal){
+        info[j+BUTTONS] = stickVal;
+        Serial.write(j+BUTTONS);
         Serial.write(stickVal);
         delay(MESSAGEDELAY);
       }
-      j = (j+1)%4;
+      j = (j+1)%8;
       
       //check the given button
-      boolean buttonVal = ps2x.Button(indexToControl(i));
-      //If the button has changed
+      boolean buttonVal;
+      if(i<14){
+        buttonVal = ps2x.Button(indexToControl(i));
+      }else{
+        buttonVal = ps2jx.Button(indexToControl(i));
+      }
       if((buttonVal?1:0) != info[i]){
         info[i] = buttonVal?1:0;
         Serial.write(i);
@@ -130,6 +146,11 @@
   }
   
   int indexToControl(int index){
+    if (index < BUTTONS){
+      index = index % (BUTTONS/2);
+    }else{
+      index = ((index - BUTTONS) % 4) + BUTTONS/2;
+    }
     switch(index){
       case 0: return PSB_START;
       case 1: return PSB_SELECT;
