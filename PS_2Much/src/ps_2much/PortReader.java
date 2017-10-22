@@ -24,6 +24,7 @@ public class PortReader {
 			//port.setComPortParameters(9600, newDataBits, newStopBits, newParity);
 			port.setComPortTimeouts(SerialPort.TIMEOUT_WRITE_SEMI_BLOCKING, 0, 0);
 			
+			System.out.println("BaudRate: " + port.getBaudRate());
 			
 			while(true){
 			try{
@@ -35,9 +36,19 @@ public class PortReader {
 				   {
 				      if (event.getEventType() != SerialPort.LISTENING_EVENT_DATA_AVAILABLE)
 				         return;
+				      
 				      byte[] newData = new byte[port.bytesAvailable()];
 				      int numRead = port.readBytes(newData, newData.length);
-				      System.out.println("Read " + numRead + " bytes.");
+				      
+				      byte temp = (byte) newData[0];
+				      
+				      System.out.println("1st: " + Byte.toString(temp));
+				      if(numRead > 1){
+				    	  System.out.println("2nd: " + (char) newData[1]);
+				      }
+				      
+				      
+				      
 				   }
 				});} catch (Exception e) {
 					port.closePort();
