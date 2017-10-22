@@ -3,7 +3,7 @@ import de.tobiaserichsen.tevm.TeVirtualMIDI;
 public class MidiTranslator extends TeVirtualMIDI{
 	final static byte LOWBUTTON = 2;
 	final static byte HIGHBUTTON = 14;
-	MidiTranslator(String s){
+	public MidiTranslator(String s){
 		super(s);
 	}
 	public static void main(String[] args) throws InterruptedException {

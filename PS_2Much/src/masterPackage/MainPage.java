@@ -9,29 +9,36 @@ import com.fazecast.jSerialComm.SerialPortEvent;
 
 import processing.core.*;
 import processingGui.Conductor;
+import ps_2much.MidiTranslator;
 import processingGui.*;
 
-
-public class MainPage extends PApplet{
+public class MainPage extends PApplet {
 	float radius = 20;
 	Conductor conduct;
 	int fps = 60;
 	byte last;
-	byte current;	
+	byte current;
 	Queue<Byte> q;
-	
-	public static void main(String[] args){
+	MidiTranslator musician;
+
+	boolean pairReady = false;
+
+	public static void main(String[] args) {
 		PApplet.main("masterPackage.MainPage");
 	}
 
-	public void settings(){
+	public void settings() {
 		size(1000, 800);
 	}
-	public void setup(){
+
+	public void setup() {
 		frameRate(fps);
 		background(20);
 		conduct = new Conductor(this);
 		smooth();
+
+		q = new ConcurrentLinkedQueue<>();
+		musician = new MidiTranslator("GoodSpotYear");
 		
 		SerialPort ports[] = SerialPort.getCommPorts();
 
@@ -48,7 +55,6 @@ public class MainPage extends PApplet{
 
 		// port.setComPortParameters(9600, newDataBits, newStopBits, newParity);
 		port.setComPortTimeouts(SerialPort.TIMEOUT_WRITE_SEMI_BLOCKING, 0, 0);
-		q = new ConcurrentLinkedQueue<>();
 		System.out.println("BaudRate: " + port.getBaudRate());
 		port.addDataListener(new SerialPortDataListener() {
 			@Override
@@ -69,50 +75,45 @@ public class MainPage extends PApplet{
 
 			}
 		});
-		
-		 last = 0;
-		 current = 0;
+
+		last = 0;
+		current = 0;
+		while (!(last == -1 && current == -2)) {
+			if (!q.isEmpty()) {
+				last = current;
+				current = q.remove();
+			}
+		}
+
+		System.out.println("Reset recieved!");
 
 	}
+
 	double xoff0 = 175;
 	double xoff1 = 150;
 	double xoff2 = 200;
-	
-	public void draw(){
-		if(!conduct.getCrazy())
-		background(noise((float) xoff0)*255, noise((float) xoff1)*255, noise((float) xoff2)*255 );
+
+	public void draw() {
+		if (!conduct.getCrazy())
+			background(noise((float) xoff0) * 255, noise((float) xoff1) * 255, noise((float) xoff2) * 255);
 		conduct.update();
 		xoff0 += .01;
-		xoff0+=.01;
-		xoff0 +=.03;
-		
-		//Wait for reset code
-				
-				while(!(last == -1 && current == -2)){
-					if(!q.isEmpty()){
-						last = current;
-						current = q.remove();
-						System.out.println("Reset recieved!");
-					}
-				}
-				boolean first = true;
-					if (!q.isEmpty()) {
-						current = q.remove();
-						System.out.print(first ? "1:" : "2:");
-						first = !first;
-						System.out.println(current);
+		xoff0 += .01;
+		xoff0 += .03;
 
-					
-				}
 		
+		if (!q.isEmpty()) {
+			last = current;
+			current = q.remove();
+			if(pairReady)
+				musician.translate(last, current);
+			pairReady = !pairReady;
+		}
+
 	}
 
-	public void keyPressed(){
-			conduct.key(key);
+	public void keyPressed() {
+		conduct.key(key);
 	}
-
 
 }
-
-
-
