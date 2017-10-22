@@ -21,6 +21,7 @@ public class MainPage extends PApplet {
 	int frame = 0;
 	Queue<Byte> q;
 	MidiTranslator musician;
+	MidiTranslator musician2;
 
 	boolean pairReady = false;
 
@@ -43,6 +44,7 @@ public class MainPage extends PApplet {
 		try{
 		q = new ConcurrentLinkedQueue<>();
 		musician = new MidiTranslator("GoodSpotYear");
+		musician2 = new MidiTranslator("GoodSpotYear2");
 		
 		SerialPort ports[] = SerialPort.getCommPorts();
 
@@ -115,18 +117,21 @@ public class MainPage extends PApplet {
 		
 		frame = 0;
 		}
-
+		
 		
 		if (!q.isEmpty()) {
 			last = current;
 			current = q.remove();
 			if(pairReady){
-				musician.translate(last, current);
+				if(last < 16 || (last >= 32 && last <36)){
+					musician.translate(last, current);
+				}else{
+					musician2.translate(last,current);
+				}
 				conduct.key(last);
 			}
 			pairReady = !pairReady;
 		}
-
 	}
 	
 	public void keyPressed(){

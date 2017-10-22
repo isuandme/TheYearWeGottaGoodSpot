@@ -2,7 +2,7 @@ package ps_2much;
 import de.tobiaserichsen.tevm.TeVirtualMIDI;
 public class MidiTranslator extends TeVirtualMIDI{
 	final static byte LOWBUTTON = 2;
-	final static byte HIGHBUTTON = 14;
+	final static byte HIGHBUTTON = 32;
 	public MidiTranslator(String s){
 		super(s);
 	}
@@ -22,7 +22,7 @@ public class MidiTranslator extends TeVirtualMIDI{
 //	}
 	
 	public boolean translate(byte first, byte second){
-
+		
 		byte[] command = new byte[3];
 		if(LOWBUTTON <= first && first < HIGHBUTTON ){
 			command[0] = (byte)(second == 1 ? 144:128);
@@ -68,6 +68,32 @@ public class MidiTranslator extends TeVirtualMIDI{
 		case 12: ret = 45;
 		break;
 		case 13: ret = 41;
+		break;
+
+		
+		case 18: ret = 60;
+		break;
+		case 19: ret = 62;
+		break;
+		case 20: ret = 64;
+		break;
+		case 21: ret = 67;
+		break;
+		case 22: ret = 69;
+		break;
+		case 23: ret = 72;
+		break;
+		case 24: ret = 74;
+		break;
+		case 25: ret = 76;
+		break;
+		case 26: ret = 48;
+		break;
+		case 27: ret = 43;
+		break;
+		case 28: ret = 45;
+		break;
+		case 29: ret = 41;
 		break;
 		
 		}

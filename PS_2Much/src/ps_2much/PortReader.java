@@ -64,10 +64,7 @@ public class PortReader {
 				System.out.print(first ? "1:" : "2:");
 				first = !first;
 				System.out.println(current);
-
 			}
 		}
-
 	}
-
 }
