@@ -17,15 +17,17 @@ public abstract class Shapes {
 	double gravity = 0.5;
 	double friction = -0.9;
 	double maxVel = 20;
+	int colorOffset;
 	ArrayList<Shapes> others;
+	
 	
 	Shapes(PApplet p){
 		parent = p;
 		this.size = (int) parent.random(20, 100);
 		diameter = this.size;
-		color = parent.color(parent.random(150,255), parent.random(150,255), parent.random(150,255));
 		this.x = (int) parent.random(parent.width-this.size);
 		this.y = (int) parent.random(parent.height-this.size);
+		colorOffset=parent.color(0,0,0);
 	}
 	
 	public abstract void display();
@@ -80,6 +82,7 @@ public abstract class Shapes {
 	      y = diameter/2;
 	      vy *= friction;
 	    }
+	    
 		
 	}
 
@@ -96,5 +99,6 @@ public abstract class Shapes {
 		}
 		
 	}
+
 	
 }

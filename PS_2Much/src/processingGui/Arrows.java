@@ -10,12 +10,13 @@ public class Arrows extends Shapes{
 	Arrows(PApplet p, int id){
 		super(p);
 		this.id = id;
+		this.color= parent.color(94, 106, 124);
 		
 	}
 	
 	public void display(){
 		parent.noStroke();
-		parent.fill(94, 106, 124);
+		parent.fill(this.color + colorOffset);
 		parent.rect(x,y,size,size);
 		if(id == 0)
 		parent.triangle(x, y+size, x+size/2, (float) (y+size*1.5), x + size, y+size);
