@@ -22,10 +22,11 @@ public class BackDrop extends Shapes {
 		parent.rect(0,0,parent.width, parent.height);
 		System.out.println("Pulse");
 	}
-
+	
 	@Override
-	public void move() {
-		// TODO Auto-generated method stub
+	public void move(){
 		
 	}
+
+
 }
