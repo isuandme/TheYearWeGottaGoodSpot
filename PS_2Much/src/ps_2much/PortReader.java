@@ -10,8 +10,6 @@ public class PortReader {
 		
 		SerialPort ports[] = SerialPort.getCommPorts();
 		
-		System.out.println("Select a port");
-		
 		int i = 0;
 		 
 			for(SerialPort port : ports){
@@ -28,19 +26,29 @@ public class PortReader {
 			
 			Scanner data = new Scanner(port.getInputStream());
 			
-			while(true){
-			
-				byte[] selection = new byte[2];
-				SerialPortEvent portEvent = new SerialPortEvent(port, SerialPort.LISTENING_EVENT_DATA_AVAILABLE);
-				selection[0] = portEvent.getReceivedData()[0];
-				selection[0] = portEvent.getReceivedData()[1];
-			}
-			
-			
+			port.addDataListener(new SerialPortDataListener() {
+				   @Override
+				   public int getListeningEvents() { return SerialPort.LISTENING_EVENT_DATA_AVAILABLE; }
+				   @Override
+				   public void serialEvent(SerialPortEvent event)
+				   {
+				      if (event.getEventType() != SerialPort.LISTENING_EVENT_DATA_AVAILABLE)
+				         return;
+				      byte[] newData = new byte[port.bytesAvailable()];
+				      int numRead = port.readBytes(newData, newData.length);
+				      System.out.println("Read " + numRead + " bytes.");
+				   }
+				});
 			
 			data.close();
 			port.closePort();
 	
+	}
+	
+	
+	
+	public void run(){
+		
 	}
 			
 }
