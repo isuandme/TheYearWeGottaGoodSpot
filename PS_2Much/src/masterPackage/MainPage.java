@@ -18,6 +18,7 @@ public class MainPage extends PApplet {
 	int fps = 60;
 	byte last;
 	byte current;
+	int frame = 0;
 	Queue<Byte> q;
 	MidiTranslator musician;
 
@@ -105,9 +106,15 @@ public class MainPage extends PApplet {
 		if (!conduct.getCrazy())
 			background(noise((float) xoff0) * 255, noise((float) xoff1) * 255, noise((float) xoff2) * 255);
 		conduct.update();
-		xoff0 += .01;
-		xoff0 += .01;
-		xoff0 += .03;
+		
+		frame++;
+		if(frame % 10 ==0){
+		xoff0 += .005;
+		xoff0 += .005;
+		xoff0 += .005;
+		
+		frame = 0;
+		}
 
 		
 		if (!q.isEmpty()) {
