@@ -12,6 +12,7 @@
   #define INFOSIZE    20
   #define BUTTONS     14
   #define CONTROLLERCHECKDELAY 35
+  #define RESETDELAY 1000
   #define MESSAGEDELAY 10
   
   PS2X ps2x;
@@ -57,17 +58,24 @@
 
   
   unsigned long lastCheck = 0;
+  unsigned long lastReset = 0;
   byte i = 0;
   byte j = 0;
-
+  
   
   void loop() {
     for(i = 0; i<BUTTONS; i++){
+      if(millis() - lastReset > RESETDELAY){
+        lastReset = millis();
+        Serial.write(0xff);
+        Serial.write(0xfe);
+        
+      }
       if (millis() - lastCheck > CONTROLLERCHECKDELAY){
         lastCheck = millis();
         ps2x.read_gamepad();
       }
-
+      
       byte stickVal = ps2x.Analog(indexToControl(j+16));
       if(info[j+16]!=stickVal){
         info[j+16] = stickVal;
