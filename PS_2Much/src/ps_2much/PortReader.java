@@ -24,9 +24,10 @@ public class PortReader {
 			//port.setComPortParameters(9600, newDataBits, newStopBits, newParity);
 			port.setComPortTimeouts(SerialPort.TIMEOUT_WRITE_SEMI_BLOCKING, 0, 0);
 			
-			Scanner data = new Scanner(port.getInputStream());
 			
-			port.addDataListener(new SerialPortDataListener() {
+			while(true){
+			try{
+				port.addDataListener(new SerialPortDataListener() {
 				   @Override
 				   public int getListeningEvents() { return SerialPort.LISTENING_EVENT_DATA_AVAILABLE; }
 				   @Override
@@ -38,16 +39,17 @@ public class PortReader {
 				      int numRead = port.readBytes(newData, newData.length);
 				      System.out.println("Read " + numRead + " bytes.");
 				   }
-				});
+				});} catch (Exception e) {
+					port.closePort();
+				}
+			}
 			
-			data.close();
-			port.closePort();
-	
 	}
 	
 	
 	
 	public void run(){
+		
 		
 	}
 			
