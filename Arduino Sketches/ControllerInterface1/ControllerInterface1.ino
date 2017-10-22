@@ -47,6 +47,10 @@
     for(int i = 0; i < INFOSIZE;i++){
       info[i]=0;
     }
+    while(!Serial){
+      delay(100);
+    }
+    delay(300);
   }
 
 
