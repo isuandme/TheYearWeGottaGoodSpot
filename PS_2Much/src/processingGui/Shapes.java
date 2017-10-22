@@ -14,9 +14,9 @@ public abstract class Shapes {
 	double vy = 0;
 	double spring = .1;
 	protected int diameter;
-	double gravity = 0.5;
+	double gravity = 2;
 	double friction = -0.9;
-	double maxVel = 20;
+	double maxVel = 40;
 	int colorOffset;
 	ArrayList<Shapes> others;
 	
@@ -83,6 +83,11 @@ public abstract class Shapes {
 	      vy *= friction;
 	    }
 	    
+	    if(vy>maxVel)
+	    	vy=maxVel;
+	    if(vx>maxVel)
+	    	vx=maxVel;
+	    
 		
 	}
 
@@ -95,7 +100,7 @@ public abstract class Shapes {
 		}
 		if(vy<maxVel){
 			this.vy++;
-			this.vy = this.vy*parent.random(1,3);	
+			this.vy = this.vy*parent.random(10,20);	
 		}
 		
 	}
