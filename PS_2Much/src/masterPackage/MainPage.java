@@ -29,6 +29,7 @@ public class MainPage extends PApplet {
 
 	public void settings() {
 		size(1000, 800);
+		
 	}
 
 	public void setup() {
@@ -36,7 +37,9 @@ public class MainPage extends PApplet {
 		background(20);
 		conduct = new Conductor(this);
 		smooth();
+		surface.setResizable(true);
 
+		try{
 		q = new ConcurrentLinkedQueue<>();
 		musician = new MidiTranslator("GoodSpotYear");
 		
@@ -47,9 +50,9 @@ public class MainPage extends PApplet {
 		for (SerialPort port : ports) {
 			System.out.println(i++ + ". " + port.getSystemPortName());
 		}
-
+		
 		SerialPort port = ports[0];
-
+		
 		if (!port.openPort())
 			System.out.println("Open Port Failed");
 
@@ -74,7 +77,9 @@ public class MainPage extends PApplet {
 				}
 
 			}
+		
 		});
+		
 
 		last = 0;
 		current = 0;
@@ -84,6 +89,9 @@ public class MainPage extends PApplet {
 				current = q.remove();
 			}
 		}
+	}catch(Exception e){
+		
+	}
 
 		System.out.println("Reset recieved!");
 
@@ -112,6 +120,10 @@ public class MainPage extends PApplet {
 			pairReady = !pairReady;
 		}
 
+	}
+	
+	public void keyPressed(){
+		conduct.keyBoard(key);
 	}
 
 }
