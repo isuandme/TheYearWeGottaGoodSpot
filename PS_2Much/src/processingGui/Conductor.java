@@ -13,7 +13,7 @@ public class Conductor {
 
 	
 	
-	Conductor(PApplet p){
+	public Conductor(PApplet p){
 		parent = p;
 		//shapes.add(new BackDrop(parent));
 		shapes.add(new Circle(parent));
