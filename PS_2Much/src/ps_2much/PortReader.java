@@ -10,7 +10,6 @@ import com.fazecast.jSerialComm.*;
 public class PortReader {
 
 	public static void main(String[] arg) throws InterruptedException {
-		
 
 		SerialPort ports[] = SerialPort.getCommPorts();
 
@@ -48,19 +47,24 @@ public class PortReader {
 
 			}
 		});
-		boolean first = true;
+		//Wait for reset code
 		byte last = 0;
+		byte current = 0;
+		while(!(last == -1 && current == -2)){
+			if(!q.isEmpty()){
+				last = current;
+				current = q.remove();
+				System.out.println("Reset recieved!");
+			}
+		}
+		boolean first = true;
 		while (true) {
 			if (!q.isEmpty()) {
-				byte current = q.remove();
-				if(current == -2 && last == -1){
-					System.out.println("Reset!");
-					continue;
-				}
-				first = !first;
+				current = q.remove();
 				System.out.print(first ? "1:" : "2:");
-				System.out.println(last);
-				last = current;
+				first = !first;
+				System.out.println(current);
+
 			}
 		}
 

@@ -51,7 +51,9 @@
     while(!Serial){
       delay(100);
     }
-    delay(100);
+    Serial.write(0xff);
+    delay(10);
+    Serial.write(0xfe);
   }
 
 
@@ -65,12 +67,12 @@
   
   void loop() {
     for(i = 0; i<BUTTONS; i++){
-      if(millis() - lastReset > RESETDELAY){
-        lastReset = millis();
-        Serial.write(0xff);
-        Serial.write(0xfe);
-        
-      }
+//      if(millis() - lastReset > RESETDELAY){
+//        lastReset = millis();
+//        Serial.write(0xff);
+//        Serial.write(0xfe);
+//        
+//      }
       if (millis() - lastCheck > CONTROLLERCHECKDELAY){
         lastCheck = millis();
         ps2x.read_gamepad();
