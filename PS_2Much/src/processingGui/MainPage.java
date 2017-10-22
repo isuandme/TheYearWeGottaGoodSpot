@@ -17,14 +17,14 @@ public class MainPage extends PApplet{
 	}
 	public void setup(){
 		frameRate(fps);
-		background(54);
+		background(20);
 		conduct = new Conductor(this);
 		smooth();
 
 	}
 
 	public void draw(){
-		background(54);
+		background(20);
 		conduct.update();
 	}
 

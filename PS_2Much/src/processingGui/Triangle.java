@@ -11,7 +11,10 @@ public class Triangle  extends Shapes {
 
 	@Override
 	public void display() {
-		// TODO Auto-generated method stub
+		parent.stroke(106, 201, 132);
+		parent.noFill();
+		parent.triangle(this.x, this.y+size, this.x+size/2, this.y, this.x + size, this.y+size);
+		
 		
 	}
 

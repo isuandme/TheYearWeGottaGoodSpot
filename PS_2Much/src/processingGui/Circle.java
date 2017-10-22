@@ -1,6 +1,5 @@
 package processingGui;
 
-import java.awt.Color;
 
 import processing.core.PApplet;
 
@@ -12,7 +11,9 @@ public class Circle extends Shapes{
 	//draws circle 
 	
 	public void display(){
-		parent.fill(255, 255, 255);
+		parent.stroke(216, 108, 65);
+		parent.strokeWeight(20);
+		parent.noFill();
 		parent.ellipse(x, y, size, size);
 	}
 	@Override
@@ -20,4 +21,5 @@ public class Circle extends Shapes{
 		// TODO Auto-generated method stub
 		
 	}
+	
 }
