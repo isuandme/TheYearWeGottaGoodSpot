@@ -18,9 +18,5 @@ public class Triangle  extends Shapes {
 		
 	}
 
-	@Override
-	public void move() {
-		// TODO Auto-generated method stub
-		
-	}
+
 }

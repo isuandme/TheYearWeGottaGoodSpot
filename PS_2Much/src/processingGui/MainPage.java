@@ -22,10 +22,12 @@ public class MainPage extends PApplet{
 		smooth();
 
 	}
-
+	double xoff = 0;
+	
 	public void draw(){
-		background(20);
+		background(noise((float) xoff)*255);
 		conduct.update();
+		xoff = xoff + .01;
 	}
 
 	public void keyPressed(){

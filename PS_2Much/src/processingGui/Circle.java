@@ -16,10 +16,6 @@ public class Circle extends Shapes{
 		parent.noFill();
 		parent.ellipse(x, y, size, size);
 	}
-	@Override
-	public void move() {
-		// TODO Auto-generated method stub
-		
-	}
+
 	
 }

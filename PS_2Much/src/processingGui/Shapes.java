@@ -12,31 +12,88 @@ public abstract class Shapes {
 	protected int color;
 	double vx = 0;
 	double vy = 0;
-	ArrayList<Shapes> shapes;
+	double spring = .1;
+	protected int diameter;
+	double gravity = 0.5;
+	double friction = -0.9;
+	double maxVel = 20;
+	ArrayList<Shapes> others;
 	
 	Shapes(PApplet p){
 		parent = p;
 		this.size = (int) parent.random(20, 100);
+		diameter = this.size;
 		color = parent.color(parent.random(150,255), parent.random(150,255), parent.random(150,255));
 		this.x = (int) parent.random(parent.width-this.size);
 		this.y = (int) parent.random(parent.height-this.size);
 	}
 	
 	public abstract void display();
-	public abstract void move();
 	
 	//make the shape glow then go back to normal
 	void pulse(){
 		
 	}
 	public void setShapes(ArrayList<Shapes> shapes){
-		this.shapes = shapes;
+		this.others = shapes;
+	}
+
+	public void collide(){
+		for (int i =0; i < others.size(); i++) {
+			if(this != others.get(i)){
+				float dx = others.get(i).x - x;
+				float dy = others.get(i).y - y;
+				float distance = PApplet.sqrt(dx*dx + dy*dy);
+				float minDist = others.get(i).diameter/2 + diameter/2;
+				if (distance < minDist) { 
+					float angle = PApplet.atan2(dy, dx);
+					float targetX = x + PApplet.cos(angle) * minDist;
+					float targetY = y + PApplet.sin(angle) * minDist;
+					float ax = (float) ((targetX - others.get(i).x) * spring);
+					float ay = (float) ((targetY - others.get(i).y) * spring);
+					vx -= ax;
+					vy -= ay;
+					others.get(i).vx += ax;
+					others.get(i).vy += ay;
+				}
+			}
+		}
 	}
 	
+	public void move(){
+		vy += gravity;
+	    x += vx;
+	    y += vy;
+	    if (x + diameter/2 > parent.width) {
+	      x = parent.width - diameter/2;
+	      vx *= friction; 
+	    }
+	    else if (x - diameter/2 < 0) {
+	      x = diameter/2;
+	      vx *= friction;
+	    }
+	    if (y + diameter/2 > parent.height) {
+	      y = parent.height - diameter/2;
+	      vy *= friction; 
+	    } 
+	    else if (y - diameter/2 < 0) {
+	      y = diameter/2;
+	      vy *= friction;
+	    }
+		
+	}
 
-	//make the shape bounce up
+
+	//make the shape bounce randomly
 	public void bounce() {
-		// TODO Auto-generated method stub
+		if(vx<maxVel){
+			this.vx++;
+			this.vx = this.vx*parent.random(1,3);
+		}
+		if(vy<maxVel){
+			this.vy++;
+			this.vy = this.vy*parent.random(1,3);	
+		}
 		
 	}
 	

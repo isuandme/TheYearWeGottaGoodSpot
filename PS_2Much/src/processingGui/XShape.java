@@ -16,10 +16,6 @@ public class XShape extends Shapes{
 		
 	}
 
-	@Override
-	public void move() {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 }
