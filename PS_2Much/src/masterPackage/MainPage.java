@@ -105,15 +105,13 @@ public class MainPage extends PApplet {
 		if (!q.isEmpty()) {
 			last = current;
 			current = q.remove();
-			if(pairReady)
+			if(pairReady){
 				musician.translate(last, current);
+				conduct.key(last);
+			}
 			pairReady = !pairReady;
 		}
 
-	}
-
-	public void keyPressed() {
-		conduct.key(key);
 	}
 
 }

@@ -29,18 +29,18 @@ public class Conductor {
 	}
 	
 	//delegates each char to a method of each shape
-	public void key(char key){
+	public void key(byte key){
 		switch (key){
-		case 'a': shapes.get(0).bounce(); break;
-		case 's': shapes.get(1).bounce(); break;
-		case 'd': shapes.get(2).bounce(); break;
-		case 'f':shapes.get(3).bounce(); break;
-		case 'j': shapes.get(4).bounce(); break;
-		case 'k': shapes.get(5).bounce(); break;
-		case 'l': shapes.get(6).bounce(); break;
-		case ';':shapes.get(7).bounce(); break;
-		case 'u': spot1.shine();
-		case 'i': spot2.shine();
+		case 5: shapes.get(0).bounce(); break;
+		case 2: shapes.get(1).bounce(); break;
+		case 3: shapes.get(2).bounce(); break;
+		case 4:shapes.get(3).bounce(); break;
+		case 7: shapes.get(4).bounce(); break;
+		case 9: shapes.get(5).bounce(); break;
+		case 6: shapes.get(6).bounce(); break;
+		case 8:shapes.get(7).bounce(); break;
+		case 11: spot1.shine();
+		case 10: spot2.shine();
 		}
 		
 	}
