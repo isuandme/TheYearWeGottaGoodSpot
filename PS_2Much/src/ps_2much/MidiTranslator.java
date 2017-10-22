@@ -43,7 +43,35 @@ public class MidiTranslator extends TeVirtualMIDI{
 	}
 	
 	private byte toNote(byte index){
-		//Temporary
-		return (byte) ((byte)60+index);
+		int ret = 0;
+		switch(index){
+		case 2: ret = 60;
+		break;
+		case 3: ret = 62;
+		break;
+		case 4: ret = 64;
+		break;
+		case 5: ret = 67;
+		break;
+		case 6: ret = 69;
+		break;
+		case 7: ret = 72;
+		break;
+		case 8: ret = 74;
+		break;
+		case 9: ret = 76;
+		break;
+		case 10: ret = 48;
+		break;
+		case 11: ret = 43;
+		break;
+		case 12: ret = 45;
+		break;
+		case 13: ret = 41;
+		break;
+		
+		}
+
+		return (byte) ret;
 	}
 }
