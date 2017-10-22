@@ -22,16 +22,17 @@ public class MainPage extends PApplet{
 		smooth();
 
 	}
-	double xoff0 = 0;
-	double xoff1 = 0;
-	double xoff2 = 0;
+	double xoff0 = 175;
+	double xoff1 = 150;
+	double xoff2 = 200;
 	
 	public void draw(){
+		if(!conduct.getCrazy())
 		background(noise((float) xoff0)*255, noise((float) xoff1)*255, noise((float) xoff2)*255 );
 		conduct.update();
 		xoff0 += .01;
 		xoff0+=.01;
-		xoff0 +=.01;
+		xoff0 +=.03;
 		
 	}
 
