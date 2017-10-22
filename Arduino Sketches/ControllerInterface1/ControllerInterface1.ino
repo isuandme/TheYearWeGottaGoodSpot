@@ -48,9 +48,9 @@
       info[i]=0;
     }
     while(!Serial){
-      delay(1000);
+      delay(100);
     }
-    delay(300);
+    delay(100);
   }
 
 
