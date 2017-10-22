@@ -16,7 +16,7 @@ public class PortReader {
 				System.out.println(i++ + ". " + port.getSystemPortName());
 			}
 			
-			SerialPort port = ports[2];
+			SerialPort port = ports[3];
 			
 			if(!port.openPort())
 				System.out.println("Open Port Failed");
@@ -40,11 +40,13 @@ public class PortReader {
 				      byte[] newData = new byte[port.bytesAvailable()];
 				      int numRead = port.readBytes(newData, newData.length);
 				      
-				      byte temp = (byte) newData[0];
+				      int data_0 =  newData[0];
 				      
-				      System.out.println("1st: " + Byte.toString(temp));
+				      System.out.println("    1st: " + data_0);
+				      
 				      if(numRead > 1){
-				    	  System.out.println("2nd: " + (char) newData[1]);
+				    	  int data_1 = (char) newData[1];
+				    	  System.out.println("    2nd: " + Integer.toString(data_1));
 				      }
 				      
 				      
@@ -58,11 +60,6 @@ public class PortReader {
 	}
 	
 	
-	
-	public void run(){
-		
-		
-	}
 			
 }
 	
