@@ -12,7 +12,7 @@
   #define INFOSIZE    20
   #define BUTTONS     14
   #define CONTROLLERCHECKDELAY 35
-  #define MESSAGEDELAY 3
+  #define MESSAGEDELAY 10
   
   PS2X ps2x;
   
@@ -47,6 +47,10 @@
     for(int i = 0; i < INFOSIZE;i++){
       info[i]=0;
     }
+    while(!Serial){
+      delay(1000);
+    }
+    delay(300);
   }
 
 

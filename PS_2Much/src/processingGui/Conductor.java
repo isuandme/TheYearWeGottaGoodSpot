@@ -7,6 +7,9 @@ import processing.core.PApplet;
 public class Conductor {
 	PApplet parent;
 	ArrayList<Shapes> shapes = new ArrayList<Shapes>();
+	SpotLight spot1;
+	SpotLight spot2;
+	
 
 	
 	
@@ -21,6 +24,8 @@ public class Conductor {
 		shapes.add(new Arrows(parent, 1));
 		shapes.add(new Arrows(parent, 2));
 		shapes.add(new Arrows(parent, 3));
+		spot1 = new SpotLight(parent, 0);
+		spot2 = new SpotLight(parent, 1);
 	}
 	
 	//delegates each char to a method of each shape
@@ -34,6 +39,8 @@ public class Conductor {
 		case 'x': shapes.get(5).bounce(); break;
 		case 'c': shapes.get(6).bounce(); break;
 		case 'v':shapes.get(7).bounce(); break;
+		case 'u': spot1.shine();
+		case 'i': spot2.shine();
 		}
 		
 	}
@@ -44,13 +51,15 @@ public class Conductor {
 	
 	//updates all the shapes on the screen
 	public void update() {
+		spot1.display();
+		spot2.display();
 		for(int i=0; i<shapes.size(); i++){
 			shapes.get(i).setShapes(shapes);
 			shapes.get(i).collide();
 			shapes.get(i).move();
 			shapes.get(i).display();
-			
 		}
+		
 		
 	}
 }

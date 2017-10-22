@@ -13,7 +13,7 @@ public class MainPage extends PApplet{
 	}
 
 	public void settings(){
-		size(800, 700);
+		size(1000, 800);
 	}
 	public void setup(){
 		frameRate(fps);
@@ -22,12 +22,17 @@ public class MainPage extends PApplet{
 		smooth();
 
 	}
-	double xoff = 0;
+	double xoff0 = 0;
+	double xoff1 = 0;
+	double xoff2 = 0;
 	
 	public void draw(){
-		background(noise((float) xoff)*255);
+		background(noise((float) xoff0)*255, noise((float) xoff1)*255, noise((float) xoff2)*255 );
 		conduct.update();
-		xoff = xoff + .01;
+		xoff0 += .01;
+		xoff0+=.01;
+		xoff0 +=.01;
+		
 	}
 
 	public void keyPressed(){
