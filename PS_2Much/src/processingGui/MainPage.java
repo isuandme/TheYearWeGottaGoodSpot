@@ -17,15 +17,17 @@ public class MainPage extends PApplet{
 	}
 	public void setup(){
 		frameRate(fps);
-		background(54);
+		background(20);
 		conduct = new Conductor(this);
 		smooth();
 
 	}
-
+	double xoff = 0;
+	
 	public void draw(){
-		background(54);
+		background(noise((float) xoff)*255);
 		conduct.update();
+		xoff = xoff + .01;
 	}
 
 	public void keyPressed(){
