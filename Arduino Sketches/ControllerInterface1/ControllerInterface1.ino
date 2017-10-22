@@ -64,9 +64,14 @@
         ps2x.read_gamepad();
       }
 
-      Serial.write(16+j);
-      Serial.write(ps2x.Analog(indexToControl(j+16)));
-      j = (j+1)%4               ;
+      byte stickVal = ps2x.Analog(indexToControl(j+16));
+      if(info[j+16]!=stickVal){
+        info[j+16] = stickVal;
+        Serial.write(j+16);
+        Serial.write(stickVal);
+        delay(MESSAGEDELAY);
+      }
+      j = (j+1)%4;
       
       //check the given button
       boolean buttonVal = ps2x.Button(indexToControl(i));
