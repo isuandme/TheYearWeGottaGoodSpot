@@ -17,6 +17,7 @@ public abstract class Shapes {
 	double gravity = 2;
 	double friction = -0.9;
 	double maxVel = 40;
+	double crazy = 39;
 	int colorOffset;
 	ArrayList<Shapes> others;
 	
@@ -87,8 +88,17 @@ public abstract class Shapes {
 	    	vy=maxVel;
 	    if(vx>maxVel)
 	    	vx=maxVel;
+
 	    
 		
+	}
+	
+	public boolean getCrazy(){
+		if(vx>crazy)
+			if(vy>crazy)
+				return true;
+		return false;
+						
 	}
 
 

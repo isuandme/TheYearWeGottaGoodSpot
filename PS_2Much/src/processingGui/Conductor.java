@@ -35,10 +35,10 @@ public class Conductor {
 		case 's': shapes.get(1).bounce(); break;
 		case 'd': shapes.get(2).bounce(); break;
 		case 'f':shapes.get(3).bounce(); break;
-		case 'z': shapes.get(4).bounce(); break;
-		case 'x': shapes.get(5).bounce(); break;
-		case 'c': shapes.get(6).bounce(); break;
-		case 'v':shapes.get(7).bounce(); break;
+		case 'j': shapes.get(4).bounce(); break;
+		case 'k': shapes.get(5).bounce(); break;
+		case 'l': shapes.get(6).bounce(); break;
+		case ';':shapes.get(7).bounce(); break;
 		case 'u': spot1.shine();
 		case 'i': spot2.shine();
 		}
@@ -48,7 +48,7 @@ public class Conductor {
 	
 	
 	
-	
+	private boolean getCrazy = false;
 	//updates all the shapes on the screen
 	public void update() {
 		spot1.display();
@@ -58,8 +58,11 @@ public class Conductor {
 			shapes.get(i).collide();
 			shapes.get(i).move();
 			shapes.get(i).display();
+			getCrazy = shapes.get(i).getCrazy();
 		}
 		
-		
+	}
+	public boolean getCrazy(){
+		return getCrazy;
 	}
 }
