@@ -27,20 +27,23 @@ public class PortReader {
 			port.setComPortTimeouts(SerialPort.TIMEOUT_WRITE_SEMI_BLOCKING, 0, 0);
 			
 			Scanner data = new Scanner(port.getInputStream());
+			byte[] selection = new byte[2];
 			
-			while(true){
-			
-				byte[] selection = new byte[2];
-				SerialPortEvent portEvent = new SerialPortEvent(port, SerialPort.LISTENING_EVENT_DATA_AVAILABLE);
-				selection[0] = portEvent.getReceivedData()[0];
-				selection[0] = portEvent.getReceivedData()[1];
-			}
+			SerialPortEvent portEvent = new SerialPortEvent(port, SerialPort.LISTENING_EVENT_DATA_AVAILABLE);
+			selection[0] = portEvent.getReceivedData()[0];
+			selection[1] = portEvent.getReceivedData()[1];
 			
 			
+			
+			System.out.println("sel1: " + selection[0]);
 			
 			data.close();
 			port.closePort();
 	
+	}
+	
+	public void run(){
+		
 	}
 			
 }
